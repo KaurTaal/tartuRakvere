@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tartu → Rakvere · Packing List</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0e0f0e;
+    --surface: #151615;
+    --surface2: #1b1d1b;
+    --border: #2a2d2a;
+    --border2: #363a36;
+    --text: #e8ebe5;
+    --muted: #7a7f77;
+    --faint: #3a3d3a;
+    --green: #6fcf7a;
+    --green-dim: #1d3320;
+    --green-text: #4db85a;
+    --amber: #e8b84b;
+    --amber-dim: #2e2410;
+    --amber-text: #c9993a;
+    --red: #e06060;
+    --red-dim: #2e1515;
+    --blue: #7ab8e8;
+    --blue-dim: #152030;
+    --purple: #a888e0;
+    --purple-dim: #1e1530;
+    --accent: #6fcf7a;
+    --font-display: 'Syne', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    padding: 2rem 1rem 4rem;
+  }
+
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  .header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .route {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+
+  .route span {
+    color: var(--accent);
+  }
+
+  .meta {
+    font-size: 0.72rem;
+    color: var(--muted);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+  }
+
+  .progress-bar-wrap {
+    background: var(--surface2);
+    border-radius: 2px;
+    height: 3px;
+    margin-bottom: 0.6rem;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .progress-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #packed-count { color: var(--accent); }
+
+  /* Stats row */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 2rem;
+  }
+
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 8px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 3px;
+  }
+
+  .stat-label {
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Section */
+  .section {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--surface);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+
+  .section-header:hover { background: var(--surface2); }
+
+  .section-icon {
+    font-size: 1rem;
+    width: 24px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    flex: 1;
+    color: var(--text);
+  }
+
+  .section-badge {
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .badge-warn { background: var(--amber-dim); color: var(--amber); border: 1px solid #3d3010; }
+  .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid #1e4025; }
+
+  .chevron {
+    color: var(--muted);
+    font-size: 0.75rem;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .section.open .chevron { transform: rotate(180deg); }
+
+  .section-body {
+    display: none;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+  }
+
+  .section.open .section-body { display: block; }
+
+  /* Item row */
+  .item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 9px 14px;
+    border-bottom: 1px solid var(--faint);
+    cursor: pointer;
+    transition: background 0.12s;
+  }
+
+  .item:last-child { border-bottom: none; }
+  .item:hover { background: var(--surface); }
+
+  .item-check {
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid var(--border2);
+    border-radius: 4px;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    font-size: 0.65rem;
+  }
+
+  .item.checked .item-check {
+    background: var(--green);
+    border-color: var(--green);
+    color: #0a1a0c;
+  }
+
+  .item.checked .item-name {
+    color: var(--muted);
+    text-decoration: line-through;
+    text-decoration-color: var(--faint);
+  }
+
+  .item-info { flex: 1; min-width: 0; }
+
+  .item-name {
+    font-size: 0.8rem;
+    color: var(--text);
+    line-height: 1.4;
+    transition: color 0.15s;
+  }
+
+  .item-note {
+    font-size: 0.68rem;
+    color: var(--muted);
+    margin-top: 2px;
+    line-height: 1.4;
+    font-style: italic;
+  }
+
+  .item-tag {
+    font-size: 0.6rem;
+    padding: 2px 7px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 2px;
+    align-self: flex-start;
+  }
+
+  .tag-have { background: var(--green-dim); color: var(--green-text); border: 1px solid #1e4025; }
+  .tag-missing { background: var(--amber-dim); color: var(--amber-text); border: 1px solid #3d3010; }
+  .tag-borrow { background: var(--blue-dim); color: var(--blue); border: 1px solid #1a3045; }
+  .tag-partner { background: var(--purple-dim); color: var(--purple); border: 1px solid #2a1e45; }
+  .tag-consider { background: #1a1510; color: #c09050; border: 1px solid #3a2e10; }
+
+  /* Notes section */
+  .notes {
+    margin-top: 2rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .notes-header {
+    background: var(--surface);
+    padding: 12px 14px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .note-item {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--faint);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .note-item:last-child { border-bottom: none; }
+
+  .note-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .note-title {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 3px;
+  }
+
+  .note-body {
+    font-size: 0.7rem;
+    color: var(--muted);
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  .note-urgent { border-left: 2px solid var(--red); }
+  .note-info { border-left: 2px solid var(--blue); }
+  .note-tip { border-left: 2px solid var(--accent); }
+  .note-warn { border-left: 2px solid var(--amber); }
+
+  /* Footer */
+  .footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--faint);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Divider inside body */
+  .section-body .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0;
+  }
+
+  @media (max-width: 480px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .stat-num { font-size: 1.2rem; }
+    body { padding: 1.2rem 0.75rem 3rem; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="route">Tartu <span>→</span> Rakvere</div>
+    <div class="meta">5 days · 150 km · packing list</div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar" id="progress-bar" style="width:0%"></div>
+    </div>
+    <div class="progress-label">
+      <span><span id="packed-count">0</span> packed</span>
+      <span id="pct-label">0%</span>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-num" style="color:var(--green)" id="s-have">0</div>
+      <div class="stat-label">have it</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--amber)" id="s-missing">0</div>
+      <div class="stat-label">get it</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--blue)" id="s-borrow">0</div>
+      <div class="stat-label">borrowing</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" style="color:var(--purple)" id="s-partner">0</div>
+      <div class="stat-label">partner</div>
+    </div>
+  </div>
+
+  <div id="sections-root"></div>
+
+  <div class="notes">
+    <div class="notes-header">
+      <span>📋</span> Notes to remember
+    </div>
+    <div class="note-item note-urgent">
+      <div class="note-icon">🦟</div>
+      <div>
+        <div class="note-title">Bug spray + tick checks — critical</div>
+        <div class="note-body">Late May is peak tick season in Estonian forests. Apply bug spray daily and do a full body tick check every evening — groin, armpits, back of knees, hairline. A tick removal card is tiny and worth packing.</div>
+      </div>
+    </div>
+    <div class="note-item note-warn">
+      <div class="note-icon">💧</div>
+      <div>
+        <div class="note-title">Water — confirm you have bottles!</div>
+        <div class="note-body">Neither list explicitly mentions water bottles. You need at least 1L capacity each. If using natural water sources on trail, bring purification tablets or a filter. Don't assume all checkpoints have water.</div>
+      </div>
+    </div>
+    <div class="note-item note-tip">
+      <div class="note-icon">🌙</div>
+      <div>
+        <div class="note-title">Hammock without a mat — watch the cold</div>
+        <div class="note-body">No mat needed in a hammock — you're suspended. But your sleeping bag's insulation gets compressed under you and loses warmth. If the night drops below ~10°C, stuff a fleece or jacket underneath your back and legs. Estonian May nights can surprise you.</div>
+      </div>
+    </div>
+    <div class="note-item note-info">
+      <div class="note-icon">🦶</div>
+      <div>
+        <div class="note-title">Blisters are the #1 issue on long hikes</div>
+        <div class="note-body">150km over 5 days is ~30km/day. Pack more blister plasters than you think you need. Treat hot spots immediately — don't wait until a blister forms. Wool socks reduce friction significantly.</div>
+      </div>
+    </div>
+    <div class="note-item note-tip">
+      <div class="note-icon">🔋</div>
+      <div>
+        <div class="note-title">2 charging cables — phone + watch</div>
+        <div class="note-body">Easy to forget one of them. Pack both in your electronics dry bag. Also confirm your power bank has enough capacity for 5 days with limited charging access.</div>
+      </div>
+    </div>
+    <div class="note-item note-info">
+      <div class="note-icon">🗺️</div>
+      <div>
+        <div class="note-title">Download offline maps before you leave</div>
+        <div class="note-body">Mobile data may be patchy on the trail. Download the route offline on Maps.me, OsmAnd, or save the Google My Maps to your device. Know the rough checkpoints and distances in advance.</div>
+      </div>
+    </div>
+    <div class="note-item note-warn">
+      <div class="note-icon">⛺</div>
+      <div>
+        <div class="note-title">Confirm tarp from partner before departure</div>
+        <div class="note-body">Your partner is buying a tarp for you — make sure it arrives and you test the setup before day 1. A tarp rigged wrong in the rain is miserable. Practice once at home.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">tap items to mark as packed · progress saves in browser</div>
+
+</div>
+
+<script>
+const data = [
+  {
+    icon: "👕",
+    title: "Clothing & footwear",
+    items: [
+      { name: "Sport shirts (4x)", status: "have" },
+      { name: "Shorts", status: "have" },
+      { name: "Ski / trail pants", status: "have" },
+      { name: "Warm base layer (thick)", status: "have" },
+      { name: "Light base layer", status: "have" },
+      { name: "Jacket", status: "have" },
+      { name: "Neck gaiter / buff", status: "have" },
+      { name: "Lightweight gloves", status: "have" },
+      { name: "Cap / baseball hat", status: "have" },
+      { name: "Socks (multiple pairs)", status: "have" },
+      { name: "Underwear (4x)", status: "have" },
+      { name: "Wool socks (1x)", status: "have" },
+      { name: "Warm hat", status: "have" },
+      { name: "Thermal tights / pikad retuusid", status: "have" },
+      { name: "Sunglasses", status: "borrow", note: "Borrowing" },
+      { name: "Extra shoes / trail runners", status: "have" },
+      { name: "Sandals / flip-flops (plätud)", status: "have", note: "Great for camp and sauna stops" },
+      { name: "Rain poncho / vihmakeep", status: "have" },
+      { name: "Light long-sleeve / sun shirt", status: "consider", note: "Useful for sun protection + buggy forest sections" },
+    ]
+  },
+  {
+    icon: "🌲",
+    title: "Sleeping & shelter",
+    items: [
+      { name: "Sleeping bag / magamiskott", status: "have", note: "From Kalm" },
+      { name: "Hammock", status: "have", note: "No mat needed — you're suspended. Layer fleece under you on cold nights." },
+      { name: "Tarp (individual)", status: "partner", note: "Partner is buying for you — confirm before departure!" },
+      { name: "Tent pegs", status: "borrow", note: "Borrowing from partner — confirm count" },
+    ]
+  },
+  {
+    icon: "🍳",
+    title: "Food & cooking",
+    items: [
+      { name: "Fork / spoon / spork", status: "missing" },
+      { name: "Food container / bowl", status: "missing" },
+      { name: "Cooking pot", status: "missing", note: "Partner has one — discuss whether to share or bring yours" },
+      { name: "Stove / priimus", status: "partner", note: "Partner carries" },
+      { name: "Gas canister (230g)", status: "partner", note: "May need 2nd for 5 days" },
+      { name: "Windscreen + cutting board", status: "partner" },
+      { name: "Backup lighter", status: "consider", note: "Always carry your own — cheap insurance" },
+      { name: "Water bottle (1L+)", status: "missing", note: "⚠ Not on either list — confirm you have one!" },
+      { name: "Water filter / purification tabs", status: "missing", note: "For natural water sources on trail" },
+    ]
+  },
+  {
+    icon: "🩹",
+    title: "Medical & hygiene",
+    items: [
+      { name: "Sports tape / teip", status: "missing" },
+      { name: "Blister plasters + regular plasters", status: "missing", note: "Pack more than you think. 150km is brutal on feet." },
+      { name: "Bug spray / sääsetõrje", status: "missing", note: "🚨 Critical — late May, Estonian forest, peak tick season" },
+      { name: "Ibuprofen", status: "missing", note: "Anti-inflammatory for sore muscles/joints" },
+      { name: "Wet wipes / niisked salvrätikud", status: "missing" },
+      { name: "Microfiber towel / froteerätik", status: "borrow", note: "Borrowing" },
+      { name: "Small sponge", status: "missing" },
+      { name: "Soap + holder", status: "missing" },
+      { name: "Small shampoo", status: "missing" },
+      { name: "Toilet paper / peldikupaber", status: "have" },
+      { name: "Toothbrush + toothpaste", status: "have" },
+      { name: "Razor / žilett", status: "have" },
+      { name: "Deodorant", status: "have" },
+      { name: "Acne cleanser", status: "have" },
+      { name: "Paracetamol", status: "partner", note: "Partner carries — consider your own backup" },
+      { name: "Desinfectant liquid", status: "partner" },
+      { name: "Tick removal tool", status: "consider", note: "Peak tick season — tiny, weighs nothing, very worth it" },
+    ]
+  },
+  {
+    icon: "🎒",
+    title: "Gear & tools",
+    items: [
+      { name: "Power bank / akupank", status: "have", note: "From Kalm" },
+      { name: "Headlamp / pealamp", status: "have", note: "From Marten" },
+      { name: "Knife / nuga", status: "missing" },
+      { name: "Rope / nöör", status: "have", note: "From Marten + partner has more" },
+      { name: "Saw / saag", status: "partner", note: "One between two is enough" },
+      { name: "Waterproof dry bags", status: "missing", note: "Inside the bag — for electronics + medical especially" },
+      { name: "Phone charging cable", status: "missing", note: "📱 Don't forget! One for phone, one for watch — 2 total" },
+      { name: "Watch charging cable", status: "missing", note: "⌚ Pack both cables in the same electronics bag" },
+      { name: "Offline maps downloaded", status: "consider", note: "Maps.me or OsmAnd — download the route before you go" },
+      { name: "Trekking poles", status: "consider", note: "Optional but knees will thank you by day 3 at 30km/day" },
+    ]
+  }
+];
+
+const tagLabel = { have: "have it", missing: "get it", borrow: "borrow", partner: "partner", consider: "consider" };
+const tagClass = { have: "tag-have", missing: "tag-missing", borrow: "tag-borrow", partner: "tag-partner", consider: "tag-consider" };
+
+const root = document.getElementById('sections-root');
+const checkedState = JSON.parse(localStorage.getItem('hike-packed') || '{}');
+
+let totalCheckable = 0;
+let statCounts = { have: 0, missing: 0, borrow: 0, partner: 0 };
+
+data.forEach((sec, si) => {
+  const section = document.createElement('div');
+  section.className = 'section';
+  section.dataset.idx = si;
+
+  const missingItems = sec.items.filter(it => it.status === 'missing').length;
+  const badge = missingItems > 0
+    ? `<span class="section-badge badge-warn">${missingItems} to get</span>`
+    : `<span class="section-badge badge-ok">sorted</span>`;
+
+  section.innerHTML = `
+    <div class="section-header">
+      <span class="section-icon">${sec.icon}</span>
+      <span class="section-title">${sec.title}</span>
+      ${badge}
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body"></div>
+  `;
+
+  const body = section.querySelector('.section-body');
+
+  sec.items.forEach((it, ii) => {
+    const key = `${si}-${ii}`;
+    if (it.status !== 'partner' && it.status !== 'consider') {
+      totalCheckable++;
+      if (it.status === 'have') statCounts.have++;
+      else if (it.status === 'missing') statCounts.missing++;
+      else if (it.status === 'borrow') statCounts.borrow++;
+    } else if (it.status === 'partner') {
+      statCounts.partner++;
+    }
+
+    const row = document.createElement('div');
+    row.className = 'item' + (checkedState[key] ? ' checked' : '');
+    row.dataset.key = key;
+
+    row.innerHTML = `
+      <div class="item-check">${checkedState[key] ? '✓' : ''}</div>
+      <div class="item-info">
+        <div class="item-name">${it.name}</div>
+        ${it.note ? `<div class="item-note">${it.note}</div>` : ''}
+      </div>
+      <span class="item-tag ${tagClass[it.status]}">${tagLabel[it.status]}</span>
+    `;
+
+    row.addEventListener('click', () => {
+      const isChecked = row.classList.toggle('checked');
+      checkedState[key] = isChecked;
+      row.querySelector('.item-check').textContent = isChecked ? '✓' : '';
+      localStorage.setItem('hike-packed', JSON.stringify(checkedState));
+      updateProgress();
+    });
+
+    body.appendChild(row);
+  });
+
+  section.querySelector('.section-header').addEventListener('click', () => {
+    section.classList.toggle('open');
+  });
+
+  root.appendChild(section);
+});
+
+document.getElementById('s-have').textContent = statCounts.have;
+document.getElementById('s-missing').textContent = statCounts.missing;
+document.getElementById('s-borrow').textContent = statCounts.borrow;
+document.getElementById('s-partner').textContent = statCounts.partner;
+
+function updateProgress() {
+  const checked = Object.values(checkedState).filter(Boolean).length;
+  const pct = totalCheckable > 0 ? Math.round((checked / totalCheckable) * 100) : 0;
+  document.getElementById('progress-bar').style.width = pct + '%';
+  document.getElementById('packed-count').textContent = checked;
+  document.getElementById('pct-label').textContent = pct + '%';
+}
+
+updateProgress();
+</script>
+</body>
+</html>
