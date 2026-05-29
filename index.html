@@ -1,564 +1,694 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="et">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tartu → Rakvere · Packing List</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0e0f0e;
-    --surface: #151615;
-    --surface2: #1b1d1b;
-    --border: #2a2d2a;
-    --border2: #363a36;
-    --text: #e8ebe5;
-    --muted: #7a7f77;
-    --faint: #3a3d3a;
-    --green: #6fcf7a;
-    --green-dim: #1d3320;
-    --green-text: #4db85a;
-    --amber: #e8b84b;
-    --amber-dim: #2e2410;
-    --amber-text: #c9993a;
-    --red: #e06060;
-    --red-dim: #2e1515;
-    --blue: #7ab8e8;
-    --blue-dim: #152030;
-    --purple: #a888e0;
-    --purple-dim: #1e1530;
-    --accent: #6fcf7a;
-    --font-display: 'Syne', sans-serif;
-    --font-mono: 'DM Mono', monospace;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tartu → Rakvere · Pakkelист</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0e0f0e;
+      --surface: #151615;
+      --surface2: #1b1d1b;
+      --border: #2a2d2a;
+      --border2: #363a36;
+      --text: #e8ebe5;
+      --muted: #7a7f77;
+      --faint: #3a3d3a;
+      --green: #6fcf7a;
+      --green-dim: #1d3320;
+      --green-text: #4db85a;
+      --amber: #e8b84b;
+      --amber-dim: #2e2410;
+      --amber-text: #c9993a;
+      --red: #e06060;
+      --red-dim: #2e1515;
+      --blue: #7ab8e8;
+      --blue-dim: #152030;
+      --purple: #a888e0;
+      --purple-dim: #1e1530;
+      --accent: #6fcf7a;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--font-mono);
-    min-height: 100vh;
-    padding: 2rem 1rem 4rem;
-  }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+    }
 
-  .wrap {
-    max-width: 680px;
-    margin: 0 auto;
-  }
+    .wrap { max-width: 680px; margin: 0 auto; }
 
-  /* Header */
-  .header {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
-  }
+    .header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
 
-  .route {
-    font-family: var(--font-display);
-    font-size: clamp(1.6rem, 5vw, 2.4rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    color: var(--text);
-    line-height: 1;
-    margin-bottom: 0.4rem;
-  }
+    .route {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
 
-  .route span {
-    color: var(--accent);
-  }
+    .route span { color: var(--accent); }
 
-  .meta {
-    font-size: 0.72rem;
-    color: var(--muted);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 1.4rem;
-  }
+    .meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.4rem;
+    }
 
-  .progress-bar-wrap {
-    background: var(--surface2);
-    border-radius: 2px;
-    height: 3px;
-    margin-bottom: 0.6rem;
-    overflow: hidden;
-  }
+    .progress-bar-wrap {
+      background: var(--surface2);
+      border-radius: 2px;
+      height: 3px;
+      margin-bottom: 0.6rem;
+      overflow: hidden;
+    }
 
-  .progress-bar {
-    height: 100%;
-    background: var(--accent);
-    border-radius: 2px;
-    transition: width 0.4s ease;
-  }
+    .progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
 
-  .progress-label {
-    font-size: 0.7rem;
-    color: var(--muted);
-    display: flex;
-    justify-content: space-between;
-  }
+    .progress-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+    }
 
-  #packed-count { color: var(--accent); }
+    #packed-count { color: var(--accent); }
 
-  /* Stats row */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-bottom: 2rem;
-  }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 2rem;
+    }
 
-  .stat {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 10px 8px;
-    text-align: center;
-  }
+    .stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 8px;
+      text-align: center;
+    }
 
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 3px;
-  }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
 
-  .stat-label {
-    font-size: 0.62rem;
-    color: var(--muted);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+    .stat-label {
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
 
-  /* Section */
-  .section {
-    margin-bottom: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
+    .section {
+      margin-bottom: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 14px;
-    background: var(--surface);
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.15s;
-  }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      background: var(--surface);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s;
+    }
 
-  .section-header:hover { background: var(--surface2); }
+    .section-header:hover { background: var(--surface2); }
 
-  .section-icon {
-    font-size: 1rem;
-    width: 24px;
-    text-align: center;
-    flex-shrink: 0;
-  }
+    .section-icon { font-size: 1rem; width: 24px; text-align: center; flex-shrink: 0; }
 
-  .section-title {
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    flex: 1;
-    color: var(--text);
-  }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      flex: 1;
+      color: var(--text);
+    }
 
-  .section-badge {
-    font-size: 0.65rem;
-    padding: 2px 8px;
-    border-radius: 20px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-  }
+    .section-badge {
+      font-size: 0.65rem;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
 
-  .badge-warn { background: var(--amber-dim); color: var(--amber); border: 1px solid #3d3010; }
-  .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid #1e4025; }
+    .badge-warn { background: var(--amber-dim); color: var(--amber); border: 1px solid #3d3010; }
+    .badge-ok { background: var(--green-dim); color: var(--green); border: 1px solid #1e4025; }
 
-  .chevron {
-    color: var(--muted);
-    font-size: 0.75rem;
-    transition: transform 0.2s;
-    flex-shrink: 0;
-  }
+    .chevron { color: var(--muted); font-size: 0.75rem; transition: transform 0.2s; flex-shrink: 0; }
+    .section.open .chevron { transform: rotate(180deg); }
 
-  .section.open .chevron { transform: rotate(180deg); }
+    .section-body { display: none; background: var(--bg); border-top: 1px solid var(--border); }
+    .section.open .section-body { display: block; }
 
-  .section-body {
-    display: none;
-    background: var(--bg);
-    border-top: 1px solid var(--border);
-  }
+    .item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--faint);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
 
-  .section.open .section-body { display: block; }
+    .item:last-child { border-bottom: none; }
+    .item:hover { background: var(--surface); }
 
-  /* Item row */
-  .item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 9px 14px;
-    border-bottom: 1px solid var(--faint);
-    cursor: pointer;
-    transition: background 0.12s;
-  }
+    .item-check {
+      width: 18px;
+      height: 18px;
+      border: 1.5px solid var(--border2);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      font-size: 0.65rem;
+    }
 
-  .item:last-child { border-bottom: none; }
-  .item:hover { background: var(--surface); }
+    .item.checked .item-check { background: var(--green); border-color: var(--green); color: #0a1a0c; }
+    .item.checked .item-name { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--faint); }
 
-  .item-check {
-    width: 18px;
-    height: 18px;
-    border: 1.5px solid var(--border2);
-    border-radius: 4px;
-    flex-shrink: 0;
-    margin-top: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-    font-size: 0.65rem;
-  }
+    .item-info { flex: 1; min-width: 0; }
 
-  .item.checked .item-check {
-    background: var(--green);
-    border-color: var(--green);
-    color: #0a1a0c;
-  }
+    .item-name { font-size: 0.8rem; color: var(--text); line-height: 1.4; transition: color 0.15s; }
 
-  .item.checked .item-name {
-    color: var(--muted);
-    text-decoration: line-through;
-    text-decoration-color: var(--faint);
-  }
+    .item-note { font-size: 0.68rem; color: var(--muted); margin-top: 2px; line-height: 1.4; font-style: italic; }
 
-  .item-info { flex: 1; min-width: 0; }
+    .item-tag {
+      font-size: 0.6rem;
+      padding: 2px 7px;
+      border-radius: 20px;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-top: 2px;
+      align-self: flex-start;
+    }
 
-  .item-name {
-    font-size: 0.8rem;
-    color: var(--text);
-    line-height: 1.4;
-    transition: color 0.15s;
-  }
+    .tag-have { background: var(--green-dim); color: var(--green-text); border: 1px solid #1e4025; }
+    .tag-missing { background: var(--amber-dim); color: var(--amber-text); border: 1px solid #3d3010; }
+    .tag-borrow { background: var(--blue-dim); color: var(--blue); border: 1px solid #1a3045; }
+    .tag-partner { background: var(--purple-dim); color: var(--purple); border: 1px solid #2a1e45; }
+    .tag-consider { background: #1a1510; color: #c09050; border: 1px solid #3a2e10; }
+    .tag-left { background: var(--red-dim); color: var(--red); border: 1px solid #4a1a1a; }
 
-  .item-note {
-    font-size: 0.68rem;
-    color: var(--muted);
-    margin-top: 2px;
-    line-height: 1.4;
-    font-style: italic;
-  }
+    .left-behind {
+      margin-bottom: 1rem;
+      border: 1px solid #3a1a1a;
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-  .item-tag {
-    font-size: 0.6rem;
-    padding: 2px 7px;
-    border-radius: 20px;
-    flex-shrink: 0;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    font-weight: 500;
-    margin-top: 2px;
-    align-self: flex-start;
-  }
+    .left-behind .section-header { background: #1a1010; }
+    .left-behind .section-header:hover { background: #221515; }
+    .left-behind .section-body { background: #0f0a0a; border-top: 1px solid #3a1a1a; }
+    .left-behind .item { border-bottom-color: #2a1515; }
+    .left-behind .item:hover { background: #1a1010; }
 
-  .tag-have { background: var(--green-dim); color: var(--green-text); border: 1px solid #1e4025; }
-  .tag-missing { background: var(--amber-dim); color: var(--amber-text); border: 1px solid #3d3010; }
-  .tag-borrow { background: var(--blue-dim); color: var(--blue); border: 1px solid #1a3045; }
-  .tag-partner { background: var(--purple-dim); color: var(--purple); border: 1px solid #2a1e45; }
-  .tag-consider { background: #1a1510; color: #c09050; border: 1px solid #3a2e10; }
+    .consider-section {
+      margin-bottom: 1rem;
+      border: 1px solid #3a2e10;
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-  /* Notes section */
-  .notes {
-    margin-top: 2rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
+    .consider-section .section-header { background: #181208; }
+    .consider-section .section-header:hover { background: #1e1810; }
+    .consider-section .section-body { background: #100e06; border-top: 1px solid #3a2e10; }
+    .consider-section .item { border-bottom-color: #2a2208; }
+    .consider-section .item:hover { background: #181208; }
 
-  .notes-header {
-    background: var(--surface);
-    padding: 12px 14px;
-    font-family: var(--font-display);
-    font-size: 0.85rem;
-    font-weight: 600;
-    border-bottom: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
+    .notes {
+      margin-top: 2rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
 
-  .note-item {
-    padding: 12px 14px;
-    border-bottom: 1px solid var(--faint);
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-  }
+    .notes-header {
+      background: var(--surface);
+      padding: 12px 14px;
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  .note-item:last-child { border-bottom: none; }
+    .note-item {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--faint);
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
 
-  .note-icon {
-    font-size: 1rem;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+    .note-item:last-child { border-bottom: none; }
 
-  .note-title {
-    font-size: 0.78rem;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 3px;
-  }
+    .note-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
 
-  .note-body {
-    font-size: 0.7rem;
-    color: var(--muted);
-    line-height: 1.6;
-    font-style: italic;
-  }
+    .note-title { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 3px; }
 
-  .note-urgent { border-left: 2px solid var(--red); }
-  .note-info { border-left: 2px solid var(--blue); }
-  .note-tip { border-left: 2px solid var(--accent); }
-  .note-warn { border-left: 2px solid var(--amber); }
+    .note-body { font-size: 0.7rem; color: var(--muted); line-height: 1.6; font-style: italic; }
 
-  /* Footer */
-  .footer {
-    margin-top: 2rem;
-    text-align: center;
-    font-size: 0.65rem;
-    color: var(--faint);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
+    .note-urgent { border-left: 2px solid var(--red); }
+    .note-info { border-left: 2px solid var(--blue); }
+    .note-tip { border-left: 2px solid var(--accent); }
+    .note-warn { border-left: 2px solid var(--amber); }
 
-  /* Divider inside body */
-  .section-body .divider {
-    height: 1px;
-    background: var(--border);
-    margin: 0;
-  }
+    .weight-banner {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-  @media (max-width: 480px) {
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .stat-num { font-size: 1.2rem; }
-    body { padding: 1.2rem 0.75rem 3rem; }
-  }
-</style>
+    .weight-item { display: flex; flex-direction: column; align-items: center; }
+
+    .weight-num {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--amber);
+    }
+
+    .weight-label { font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .weight-divider { width: 1px; height: 36px; background: var(--border); }
+
+    .footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--faint);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 480px) {
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stat-num { font-size: 1.2rem; }
+      body { padding: 1.2rem 0.75rem 3rem; }
+    }
+  </style>
 </head>
 <body>
 <div class="wrap">
 
   <div class="header">
     <div class="route">Tartu <span>→</span> Rakvere</div>
-    <div class="meta">5 days · 150 km · packing list</div>
+    <div class="meta">5 päeva · ~150 km · pakkeloend</div>
     <div class="progress-bar-wrap">
       <div class="progress-bar" id="progress-bar" style="width:0%"></div>
     </div>
     <div class="progress-label">
-      <span><span id="packed-count">0</span> packed</span>
+      <span><span id="packed-count">0</span> pakitud</span>
       <span id="pct-label">0%</span>
+    </div>
+  </div>
+
+  <div class="weight-banner">
+    <div class="weight-item">
+      <div class="weight-num">~11 kg</div>
+      <div class="weight-label">pakitud (tühi pudel)</div>
+    </div>
+    <div class="weight-divider"></div>
+    <div class="weight-item">
+      <div class="weight-num">~12 kg</div>
+      <div class="weight-label">rajal (täis pudel)</div>
+    </div>
+    <div class="weight-divider"></div>
+    <div class="weight-item">
+      <div class="weight-num">2,26 kg</div>
+      <div class="weight-label">Keb 52 kott ise</div>
+    </div>
+    <div class="weight-divider"></div>
+    <div class="weight-item">
+      <div class="weight-num">52 L</div>
+      <div class="weight-label">koti maht</div>
     </div>
   </div>
 
   <div class="stats">
     <div class="stat">
       <div class="stat-num" style="color:var(--green)" id="s-have">0</div>
-      <div class="stat-label">have it</div>
+      <div class="stat-label">pakitud</div>
     </div>
     <div class="stat">
       <div class="stat-num" style="color:var(--amber)" id="s-missing">0</div>
-      <div class="stat-label">get it</div>
+      <div class="stat-label">puudub</div>
     </div>
     <div class="stat">
       <div class="stat-num" style="color:var(--blue)" id="s-borrow">0</div>
-      <div class="stat-label">borrowing</div>
+      <div class="stat-label">laenatud</div>
     </div>
     <div class="stat">
       <div class="stat-num" style="color:var(--purple)" id="s-partner">0</div>
-      <div class="stat-label">partner</div>
+      <div class="stat-label">kaaslane</div>
     </div>
   </div>
 
   <div id="sections-root"></div>
 
+  <!-- MAHA JÄETUD -->
+  <div class="left-behind section">
+    <div class="section-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="section-icon">🚫</span>
+      <span class="section-title">Maha jäetud (teadlikult)</span>
+      <span class="section-badge badge-warn">ei pakitud</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Šampoon 250ml</div>
+          <div class="item-note">Liiga mahukas. Kui tahad, vii 50ml reisipudelisse või võta šampooniriba.</div>
+        </div>
+        <span class="item-tag tag-left">maha jäetud</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Päikesekreem 200ml</div>
+          <div class="item-note">Liiga raske. Kui soovid kaasa võtta, vala ~50ml väiksemasse pudelisse — piisab 5 päevaks.</div>
+        </div>
+        <span class="item-tag tag-left">maha jäetud</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Küünekäärid</div>
+          <div class="item-note">Saab 5 päeva ilma hakkama. Väike kaaluvõit.</div>
+        </div>
+        <span class="item-tag tag-left">maha jäetud</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Vihmakeep (praegune raske, 0,35 kg)</div>
+          <div class="item-note">Liiga raske. Hangi kerge pakendatav vihmajope (~100–150g) — Decathlonis on odavaid variante.</div>
+        </div>
+        <span class="item-tag tag-left">maha jäetud</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- KAALUMISEL -->
+  <div class="consider-section section">
+    <div class="section-header" onclick="this.parentElement.classList.toggle('open')">
+      <span class="section-icon">🤔</span>
+      <span class="section-title">Veel kaalumisel</span>
+      <span class="section-badge badge-warn">mõtle järele</span>
+      <span class="chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Lisaniisked salvrätikud (1 pakk)</div>
+          <div class="item-note">Sul on juba 15 tk, aga teine pakk (~80g) on hea mõte — laagripuhastus, käed enne söömist, dušita päevad. Soovitan kaasa võtta.</div>
+        </div>
+        <span class="item-tag tag-consider">kaaluda</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Kerge pakendatav vihmajope (asendab vihmakeepi)</div>
+          <div class="item-note">Praegune vihmakeep on 0,35 kg. Decathloni pakendatav jope kaalub ~100–150g ja maksab ~20–30€. Eesti mai ilm on ettearvamatu — ära jäta seda vahele.</div>
+        </div>
+        <span class="item-tag tag-consider">kaaluda</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Päikesekreem (väike, ~50ml)</div>
+          <div class="item-note">Mai lõpp tähendab pikki päikesepäevi. Ka 50ml pudel kaalub vähe ja piisab 5 päevaks, kui kasutad mõistlikult (nägu, kael, käed).</div>
+        </div>
+        <span class="item-tag tag-consider">kaaluda</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Väike šampoon (50ml reisipudel)</div>
+          <div class="item-note">Eemaldad 250ml pudeli — hea. 50ml reisipudel kaalub ~50g ja jääb 5 päevaks. Vabatahtlik, kui tuled seebiga hakkama.</div>
+        </div>
+        <span class="item-tag tag-consider">kaaluda</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Puugipintsett / puugi eemaldamise tööriist</div>
+          <div class="item-note">Tipphooaeg. Sul on puugitõrjepihusti, aga eemaldamisvahend on hädavajalik kui üks kinni jääb. Kaalub peaaegu mitte midagi.</div>
+        </div>
+        <span class="item-tag tag-consider">kaaluda</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Ibuprofeen / paratsetamool</div>
+          <div class="item-note">~30 km päevas on liigestele karm. Hea omada isiklikku varu juhuks kui kaaslane pole lähedal. Mõni tablett kaalub peaaegu mitte midagi.</div>
+        </div>
+        <span class="item-tag tag-consider">kaaluda</span>
+      </div>
+      <div class="item" style="cursor:default">
+        <div class="item-info">
+          <div class="item-name">Oflaynkaardid alla laetud</div>
+          <div class="item-note">Mobiililevi võib metsaosades katkendlik olla. Laadi marsruut alla Maps.me-s, OsmAnd-is või Google My Maps-is enne lahkumist.</div>
+        </div>
+        <span class="item-tag tag-consider">kaaluda</span>
+      </div>
+    </div>
+  </div>
+
   <div class="notes">
     <div class="notes-header">
-      <span>📋</span> Notes to remember
+      <span>📋</span> Meeldetuletused
     </div>
     <div class="note-item note-urgent">
       <div class="note-icon">🦟</div>
       <div>
-        <div class="note-title">Bug spray + tick checks — critical</div>
-        <div class="note-body">Late May is peak tick season in Estonian forests. Apply bug spray daily and do a full body tick check every evening — groin, armpits, back of knees, hairline. A tick removal card is tiny and worth packing.</div>
+        <div class="note-title">Puugitõrje + puugikontroll — kriitiliselt tähtis</div>
+        <div class="note-body">Mai lõpp on Eesti metsades puukide tipphooaeg. Kanna puugitõrjet iga päev ja tee õhtul täielik keha ülevaatus — kubeme, kaenlaalused, põlvetagused, juuksepiir. Sul on puugitõrje ja sääsetõrje — hea. Mõtle ka puugipintsetile.</div>
       </div>
     </div>
     <div class="note-item note-warn">
-      <div class="note-icon">💧</div>
+      <div class="note-icon">🌧️</div>
       <div>
-        <div class="note-title">Water — confirm you have bottles!</div>
-        <div class="note-body">Neither list explicitly mentions water bottles. You need at least 1L capacity each. If using natural water sources on trail, bring purification tablets or a filter. Don't assume all checkpoints have water.</div>
+        <div class="note-title">Vihmajope — ära jäta vahele</div>
+        <div class="note-body">Jättsid raske vihmakeepi maha (hea — 0,35 kg). Aga midagi veekindlat on vaja. Decathloni pakendatav jope on ~20–30€ ja 100–150g. Eesti mai ilm on ettearvamatu — märjaks saamine ilma kuiva varikuta on väga ebamugav.</div>
       </div>
     </div>
     <div class="note-item note-tip">
       <div class="note-icon">🌙</div>
       <div>
-        <div class="note-title">Hammock without a mat — watch the cold</div>
-        <div class="note-body">No mat needed in a hammock — you're suspended. But your sleeping bag's insulation gets compressed under you and loses warmth. If the night drops below ~10°C, stuff a fleece or jacket underneath your back and legs. Estonian May nights can surprise you.</div>
-      </div>
-    </div>
-    <div class="note-item note-info">
-      <div class="note-icon">🦶</div>
-      <div>
-        <div class="note-title">Blisters are the #1 issue on long hikes</div>
-        <div class="note-body">150km over 5 days is ~30km/day. Pack more blister plasters than you think you need. Treat hot spots immediately — don't wait until a blister forms. Wool socks reduce friction significantly.</div>
-      </div>
-    </div>
-    <div class="note-item note-tip">
-      <div class="note-icon">🔋</div>
-      <div>
-        <div class="note-title">2 charging cables — phone + watch</div>
-        <div class="note-body">Easy to forget one of them. Pack both in your electronics dry bag. Also confirm your power bank has enough capacity for 5 days with limited charging access.</div>
-      </div>
-    </div>
-    <div class="note-item note-info">
-      <div class="note-icon">🗺️</div>
-      <div>
-        <div class="note-title">Download offline maps before you leave</div>
-        <div class="note-body">Mobile data may be patchy on the trail. Download the route offline on Maps.me, OsmAnd, or save the Google My Maps to your device. Know the rough checkpoints and distances in advance.</div>
+        <div class="note-title">Hammokkis külm — kihi alt alla</div>
+        <div class="note-body">Hammokkis magades surutakse magamiskoti soojustus seljaaluse all kokku ja kaotab soojapidavuse. Kui öö langeb alla ~10°C, pane fliis või jope seljaaluse ja jalgade alla. Eesti mai ööd võivad langeda 5–8°C-ni.</div>
       </div>
     </div>
     <div class="note-item note-warn">
-      <div class="note-icon">⛺</div>
+      <div class="note-icon">🩹</div>
       <div>
-        <div class="note-title">Confirm tarp from partner before departure</div>
-        <div class="note-body">Your partner is buying a tarp for you — make sure it arrives and you test the setup before day 1. A tarp rigged wrong in the rain is miserable. Practice once at home.</div>
+        <div class="note-title">Must teip + sporditeip — pakitud</div>
+        <div class="note-body">Sporditeip pahkluu/põlve toeks ja ville ennetamiseks. Must teip varustuse parandamiseks. Mõlemad pakitud — pane esmaabikotiga esitataskusse, et oleks kiiresti käepärast.</div>
+      </div>
+    </div>
+    <div class="note-item note-tip">
+      <div class="note-icon">🦶</div>
+      <div>
+        <div class="note-title">Villid on pikkmatkade peamine probleem</div>
+        <div class="note-body">~30 km päevas 5 päeva jooksul on jalale palju. Kasuta ville ennetavat pulka kuumadel kohtadel enne villi tekkimist. Sinu esmaabikotis on hea villide katmine — kasuta ennetavalt, mitte reaktiivselt.</div>
+      </div>
+    </div>
+    <div class="note-item note-info">
+      <div class="note-icon">🔋</div>
+      <div>
+        <div class="note-title">Laadimiskaablid — telefon + kell</div>
+        <div class="note-body">Paki mõlemad kaablid ühte elektroonikakotti akupangaga. Kontrolli akupanga mahtu — piisab 5 päevaks? Teeäärsetest kauplustest saab vahel laadida, kui midagi ostad.</div>
+      </div>
+    </div>
+    <div class="note-item note-info">
+      <div class="note-icon">🪢</div>
+      <div>
+        <div class="note-title">Nöör ja telgivaiad — Martenilt</div>
+        <div class="note-body">Laenate nöör ja telgivaiad Martenilt. Kontrolli enne lahkumispäeva, et need olemas on ja nöör on hammoki jaoks piisavalt pikk.</div>
+      </div>
+    </div>
+    <div class="note-item note-tip">
+      <div class="note-icon">🗺️</div>
+      <div>
+        <div class="note-title">Lae oflaynkaardid alla enne lahkumist</div>
+        <div class="note-body">Mobiililevi võib Tartu–Rakvere metsaosades katkendlik olla. Laadi marsruut alla Maps.me-s, OsmAnd-is või salvesta Google My Maps offline. Tea päevaste etappide kaugusi ja kaupluste asukohti ette.</div>
       </div>
     </div>
   </div>
 
-  <div class="footer">tap items to mark as packed · progress saves in browser</div>
+  <div class="footer">vajuta esemele et märkida pakituks · progress salvestub brauserisse</div>
 
 </div>
 
 <script>
-const data = [
-  {
-    icon: "👕",
-    title: "Clothing & footwear",
-    items: [
-      { name: "Sport shirts (4x)", status: "have" },
-      { name: "Shorts", status: "have" },
-      { name: "Ski / trail pants", status: "have" },
-      { name: "Warm base layer (thick)", status: "have" },
-      { name: "Light base layer", status: "have" },
-      { name: "Jacket", status: "have" },
-      { name: "Neck gaiter / buff", status: "have" },
-      { name: "Lightweight gloves", status: "have" },
-      { name: "Cap / baseball hat", status: "have" },
-      { name: "Socks (multiple pairs)", status: "have" },
-      { name: "Underwear (4x)", status: "have" },
-      { name: "Wool socks (1x)", status: "have" },
-      { name: "Warm hat", status: "have" },
-      { name: "Thermal tights / pikad retuusid", status: "have" },
-      { name: "Sunglasses", status: "borrow", note: "Borrowing" },
-      { name: "Extra shoes / trail runners", status: "have" },
-      { name: "Sandals / flip-flops (plätud)", status: "have", note: "Great for camp and sauna stops" },
-      { name: "Rain poncho / vihmakeep", status: "have" },
-      { name: "Light long-sleeve / sun shirt", status: "consider", note: "Useful for sun protection + buggy forest sections" },
-    ]
-  },
-  {
-    icon: "🌲",
-    title: "Sleeping & shelter",
-    items: [
-      { name: "Sleeping bag / magamiskott", status: "have", note: "From Kalm" },
-      { name: "Hammock", status: "have", note: "No mat needed — you're suspended. Layer fleece under you on cold nights." },
-      { name: "Tarp (individual)", status: "partner", note: "Partner is buying for you — confirm before departure!" },
-      { name: "Tent pegs", status: "borrow", note: "Borrowing from partner — confirm count" },
-    ]
-  },
-  {
-    icon: "🍳",
-    title: "Food & cooking",
-    items: [
-      { name: "Fork / spoon / spork", status: "missing" },
-      { name: "Food container / bowl", status: "missing" },
-      { name: "Cooking pot", status: "missing", note: "Partner has one — discuss whether to share or bring yours" },
-      { name: "Stove / priimus", status: "partner", note: "Partner carries" },
-      { name: "Gas canister (230g)", status: "partner", note: "May need 2nd for 5 days" },
-      { name: "Windscreen + cutting board", status: "partner" },
-      { name: "Backup lighter", status: "consider", note: "Always carry your own — cheap insurance" },
-      { name: "Water bottle (1L+)", status: "missing", note: "⚠ Not on either list — confirm you have one!" },
-      { name: "Water filter / purification tabs", status: "missing", note: "For natural water sources on trail" },
-    ]
-  },
-  {
-    icon: "🩹",
-    title: "Medical & hygiene",
-    items: [
-      { name: "Sports tape / teip", status: "missing" },
-      { name: "Blister plasters + regular plasters", status: "missing", note: "Pack more than you think. 150km is brutal on feet." },
-      { name: "Bug spray / sääsetõrje", status: "missing", note: "🚨 Critical — late May, Estonian forest, peak tick season" },
-      { name: "Ibuprofen", status: "missing", note: "Anti-inflammatory for sore muscles/joints" },
-      { name: "Wet wipes / niisked salvrätikud", status: "missing" },
-      { name: "Microfiber towel / froteerätik", status: "borrow", note: "Borrowing" },
-      { name: "Small sponge", status: "missing" },
-      { name: "Soap + holder", status: "missing" },
-      { name: "Small shampoo", status: "missing" },
-      { name: "Toilet paper / peldikupaber", status: "have" },
-      { name: "Toothbrush + toothpaste", status: "have" },
-      { name: "Razor / žilett", status: "have" },
-      { name: "Deodorant", status: "have" },
-      { name: "Acne cleanser", status: "have" },
-      { name: "Paracetamol", status: "partner", note: "Partner carries — consider your own backup" },
-      { name: "Desinfectant liquid", status: "partner" },
-      { name: "Tick removal tool", status: "consider", note: "Peak tick season — tiny, weighs nothing, very worth it" },
-    ]
-  },
-  {
-    icon: "🎒",
-    title: "Gear & tools",
-    items: [
-      { name: "Power bank / akupank", status: "have", note: "From Kalm" },
-      { name: "Headlamp / pealamp", status: "have", note: "From Marten" },
-      { name: "Knife / nuga", status: "missing" },
-      { name: "Rope / nöör", status: "have", note: "From Marten + partner has more" },
-      { name: "Saw / saag", status: "partner", note: "One between two is enough" },
-      { name: "Waterproof dry bags", status: "missing", note: "Inside the bag — for electronics + medical especially" },
-      { name: "Phone charging cable", status: "missing", note: "📱 Don't forget! One for phone, one for watch — 2 total" },
-      { name: "Watch charging cable", status: "missing", note: "⌚ Pack both cables in the same electronics bag" },
-      { name: "Offline maps downloaded", status: "consider", note: "Maps.me or OsmAnd — download the route before you go" },
-      { name: "Trekking poles", status: "consider", note: "Optional but knees will thank you by day 3 at 30km/day" },
-    ]
-  }
-];
+  const data = [
+    {
+      icon: "🌲",
+      title: "Magamine ja varjualune",
+      items: [
+        { name: "Magamiskott", status: "have", note: "1,2 kg — ideaalis veekindlasse kotti, koti põhja" },
+        { name: "Hammok + kinnitused", status: "have", note: "0,8 kg — peakambri keskele, seljatugi poole" },
+        { name: "Tarp / vihmakate", status: "have", note: "0,1 kg — seo koti välisküljele alla, mitte sisse" },
+        { name: "Nöör", status: "borrow", note: "Martenilt — kontrolli pikkust enne lahkumist" },
+        { name: "Telgivaiad", status: "borrow", note: "Martenilt — kontrolli kogust" },
+      ]
+    },
+    {
+      icon: "🧥",
+      title: "Soojad ja magamisriided",
+      items: [
+        { name: "Soepesu", status: "have" },
+        { name: "Paksud püksid", status: "have" },
+        { name: "Paksem fliis", status: "have" },
+        { name: "Kindad", status: "have" },
+        { name: "Müts", status: "have" },
+        { name: "Villased sokid", status: "have" },
+        { name: "Paksem jakk", status: "have", note: "0,5 kg — toimib ka hammokkis seljaaluse soojustusena külmadel öödel" },
+      ]
+    },
+    {
+      icon: "👕",
+      title: "Igapäevased ja ilmariided",
+      items: [
+        { name: "Spordi lühkarid", status: "have" },
+        { name: "Spordisärgid (5 tk)", status: "have" },
+        { name: "Sokid (7 tk)", status: "have" },
+        { name: "Spordialukad (5 tk)", status: "have" },
+        { name: "Nokats", status: "have" },
+        { name: "Torusall", status: "have" },
+        { name: "Sääsemüts", status: "have" },
+        { name: "Pikad retuusid", status: "have" },
+        { name: "Pikkade varrukatega särk", status: "have" },
+        { name: "Tuulekas", status: "have", note: "Peakambri ülaossa — kiiresti kätte saamiseks" },
+        { name: "Kerge pakendatav vihmajope", status: "missing", note: "⚠ Vihmakeep jäeti maha (liiga raske). Hangi ~100–150g pakendatav jope enne lahkumist — Decathlonis on odavaid" },
+      ]
+    },
+    {
+      icon: "👟",
+      title: "Jalatsid",
+      items: [
+        { name: "Tossud (jooksujalatsid)", status: "have", note: "Peamine jalats rajal" },
+        { name: "Plätud", status: "have", note: "Sauna jaoks + laagris jalge puhkamiseks ja ringi liikumiseks — vajalik!" },
+      ]
+    },
+    {
+      icon: "🩹",
+      title: "Esmaabi",
+      items: [
+        { name: "Niisked salvrätikud (15 tk)", status: "have" },
+        { name: "Antiseptik 100ml", status: "have" },
+        { name: "Ville ennetavad plaastrid", status: "have" },
+        { name: "Ville ennetav pulk", status: "have", note: "Kasuta ennetavalt kuumadel kohtadel enne villi tekkimist" },
+        { name: "Villiplaastrid", status: "have" },
+        { name: "Seebi/alko/puhastavad wipid", status: "have" },
+        { name: "Igasugused plaastrid", status: "have" },
+        { name: "Sidemeid", status: "have" },
+        { name: "Must teip", status: "have", note: "Paki esmaabikotiga esitataskusse" },
+        { name: "Sporditeip", status: "have", note: "Pahkluu/põlve tugi + ville ennetamine — esitatask" },
+        { name: "Ibuprofeen / paratsetamool", status: "missing", note: "Kaalu isiklikku varu — ~30 km päevas on liigestele karm" },
+        { name: "Puugipintsett", status: "missing", note: "🚨 Tipphooaeg — kaalub peaaegu mitte midagi, väga soovitatav" },
+      ]
+    },
+    {
+      icon: "🧴",
+      title: "Hügieen",
+      items: [
+        { name: "Svamm", status: "have" },
+        { name: "Seep & seebikarp", status: "have" },
+        { name: "Vetsurull", status: "have", note: "Ziplocki kotti, koti ülakaane taskusse" },
+        { name: "Puugitõrje", status: "have", note: "90ml — kanna iga päev metsas" },
+        { name: "Sääsetõrje", status: "have", note: "100ml" },
+        { name: "Aknevastane kreem", status: "have" },
+        { name: "Hambahari & pasta", status: "have" },
+        { name: "Žilett", status: "have" },
+        { name: "Deodarant", status: "have" },
+        { name: "Fiber rätik", status: "have", note: "Küljetaskusse või väljas — kuivab kiiresti" },
+      ]
+    },
+    {
+      icon: "🍳",
+      title: "Toit ja toidunõud",
+      items: [
+        { name: "Karbike", status: "have" },
+        { name: "Volditav tass", status: "have" },
+        { name: "Kahvel / lusikas", status: "have" },
+        { name: "1L sõjaväepudel", status: "have", note: "Küljetaskusse — kättesaadav kõndimise ajal" },
+      ]
+    },
+    {
+      icon: "🔧",
+      title: "Varustus ja tööriistad",
+      items: [
+        { name: "Nuga", status: "have" },
+        { name: "Pealamp", status: "borrow", note: "Martenilt" },
+        { name: "Akupank", status: "borrow", note: "Kalmilt — kontrolli laetust enne lahkumist" },
+        { name: "Telefoni laadimiskaabel", status: "have", note: "Pakitud akupangaga samasse elektroonikakotti" },
+        { name: "Kella laadimiskaabel", status: "have", note: "Pakitud — mõlemad kaablid koos" },
+        { name: "Veekindel kuivkott", status: "have", note: "Magamiskoti ja elektroonika jaoks" },
+      ]
+    },
+  ];
 
-const tagLabel = { have: "have it", missing: "get it", borrow: "borrow", partner: "partner", consider: "consider" };
-const tagClass = { have: "tag-have", missing: "tag-missing", borrow: "tag-borrow", partner: "tag-partner", consider: "tag-consider" };
+  const tagLabel = { have: "olemas", missing: "puudub", borrow: "laenatud", partner: "kaaslane", consider: "kaaluda", left: "maha jäetud" };
+  const tagClass = { have: "tag-have", missing: "tag-missing", borrow: "tag-borrow", partner: "tag-partner", consider: "tag-consider", left: "tag-left" };
 
-const root = document.getElementById('sections-root');
-const checkedState = JSON.parse(localStorage.getItem('hike-packed') || '{}');
+  const root = document.getElementById('sections-root');
+  const checkedState = JSON.parse(localStorage.getItem('hike-packed-v3') || '{}');
 
-let totalCheckable = 0;
-let statCounts = { have: 0, missing: 0, borrow: 0, partner: 0 };
+  let totalCheckable = 0;
+  let statCounts = { have: 0, missing: 0, borrow: 0, partner: 0 };
 
-data.forEach((sec, si) => {
-  const section = document.createElement('div');
-  section.className = 'section';
-  section.dataset.idx = si;
+  data.forEach((sec, si) => {
+    const section = document.createElement('div');
+    section.className = 'section';
+    section.dataset.idx = si;
 
-  const missingItems = sec.items.filter(it => it.status === 'missing').length;
-  const badge = missingItems > 0
-    ? `<span class="section-badge badge-warn">${missingItems} to get</span>`
-    : `<span class="section-badge badge-ok">sorted</span>`;
+    const missingItems = sec.items.filter(it => it.status === 'missing').length;
+    const badge = missingItems > 0
+            ? `<span class="section-badge badge-warn">${missingItems} puudub</span>`
+            : `<span class="section-badge badge-ok">korras</span>`;
 
-  section.innerHTML = `
+    section.innerHTML = `
     <div class="section-header">
       <span class="section-icon">${sec.icon}</span>
       <span class="section-title">${sec.title}</span>
@@ -568,24 +698,24 @@ data.forEach((sec, si) => {
     <div class="section-body"></div>
   `;
 
-  const body = section.querySelector('.section-body');
+    const body = section.querySelector('.section-body');
 
-  sec.items.forEach((it, ii) => {
-    const key = `${si}-${ii}`;
-    if (it.status !== 'partner' && it.status !== 'consider') {
-      totalCheckable++;
-      if (it.status === 'have') statCounts.have++;
-      else if (it.status === 'missing') statCounts.missing++;
-      else if (it.status === 'borrow') statCounts.borrow++;
-    } else if (it.status === 'partner') {
-      statCounts.partner++;
-    }
+    sec.items.forEach((it, ii) => {
+      const key = `${si}-${ii}`;
+      if (it.status !== 'partner' && it.status !== 'consider') {
+        totalCheckable++;
+        if (it.status === 'have') statCounts.have++;
+        else if (it.status === 'missing') statCounts.missing++;
+        else if (it.status === 'borrow') statCounts.borrow++;
+      } else if (it.status === 'partner') {
+        statCounts.partner++;
+      }
 
-    const row = document.createElement('div');
-    row.className = 'item' + (checkedState[key] ? ' checked' : '');
-    row.dataset.key = key;
+      const row = document.createElement('div');
+      row.className = 'item' + (checkedState[key] ? ' checked' : '');
+      row.dataset.key = key;
 
-    row.innerHTML = `
+      row.innerHTML = `
       <div class="item-check">${checkedState[key] ? '✓' : ''}</div>
       <div class="item-info">
         <div class="item-name">${it.name}</div>
@@ -594,38 +724,38 @@ data.forEach((sec, si) => {
       <span class="item-tag ${tagClass[it.status]}">${tagLabel[it.status]}</span>
     `;
 
-    row.addEventListener('click', () => {
-      const isChecked = row.classList.toggle('checked');
-      checkedState[key] = isChecked;
-      row.querySelector('.item-check').textContent = isChecked ? '✓' : '';
-      localStorage.setItem('hike-packed', JSON.stringify(checkedState));
-      updateProgress();
+      row.addEventListener('click', () => {
+        const isChecked = row.classList.toggle('checked');
+        checkedState[key] = isChecked;
+        row.querySelector('.item-check').textContent = isChecked ? '✓' : '';
+        localStorage.setItem('hike-packed-v3', JSON.stringify(checkedState));
+        updateProgress();
+      });
+
+      body.appendChild(row);
     });
 
-    body.appendChild(row);
+    section.querySelector('.section-header').addEventListener('click', () => {
+      section.classList.toggle('open');
+    });
+
+    root.appendChild(section);
   });
 
-  section.querySelector('.section-header').addEventListener('click', () => {
-    section.classList.toggle('open');
-  });
+  document.getElementById('s-have').textContent = statCounts.have;
+  document.getElementById('s-missing').textContent = statCounts.missing;
+  document.getElementById('s-borrow').textContent = statCounts.borrow;
+  document.getElementById('s-partner').textContent = statCounts.partner;
 
-  root.appendChild(section);
-});
+  function updateProgress() {
+    const checked = Object.values(checkedState).filter(Boolean).length;
+    const pct = totalCheckable > 0 ? Math.round((checked / totalCheckable) * 100) : 0;
+    document.getElementById('progress-bar').style.width = pct + '%';
+    document.getElementById('packed-count').textContent = checked;
+    document.getElementById('pct-label').textContent = pct + '%';
+  }
 
-document.getElementById('s-have').textContent = statCounts.have;
-document.getElementById('s-missing').textContent = statCounts.missing;
-document.getElementById('s-borrow').textContent = statCounts.borrow;
-document.getElementById('s-partner').textContent = statCounts.partner;
-
-function updateProgress() {
-  const checked = Object.values(checkedState).filter(Boolean).length;
-  const pct = totalCheckable > 0 ? Math.round((checked / totalCheckable) * 100) : 0;
-  document.getElementById('progress-bar').style.width = pct + '%';
-  document.getElementById('packed-count').textContent = checked;
-  document.getElementById('pct-label').textContent = pct + '%';
-}
-
-updateProgress();
+  updateProgress();
 </script>
 </body>
 </html>
